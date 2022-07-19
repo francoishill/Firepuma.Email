@@ -1,7 +1,12 @@
 ﻿name: Deploy Nuget packages
 
 on:
-  [ push ]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   DOTNET_VERSION: '6.0'

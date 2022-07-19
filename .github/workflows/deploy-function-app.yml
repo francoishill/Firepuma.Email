@@ -1,7 +1,12 @@
 ﻿name: Deploy FunctionApp
 
 on:
-  [push]
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
 
 env:
   AZURE_FUNCTIONAPP_NAME: 'Firepuma-Email-MicroService'
