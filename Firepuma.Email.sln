@@ -1,0 +1,52 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.FunctionApp", "Firepuma.Email.FunctionApp\Firepuma.Email.FunctionApp.csproj", "{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Abstractions", "Firepuma.Email.Abstractions\Firepuma.Email.Abstractions.csproj", "{3D48461C-555A-4ADD-AE40-6369E9BF34E1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Client", "Firepuma.Email.Client\Firepuma.Email.Client.csproj", "{3A727E60-D550-491C-B242-82EF728206E9}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{AB1F18DA-27BB-4CA5-8EB9-DC1E5B3852D8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleSendEmailApi", "Examples\ExampleSendEmailApi\ExampleSendEmailApi.csproj", "{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Tests", "Firepuma.Email.Tests\Firepuma.Email.Tests.csproj", "{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherFiles", "OtherFiles", "{B998865C-2A7F-42B0-B054-54C86FB32CDA}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+		.github\workflows\deploy-function-app.yml = .github\workflows\deploy-function-app.yml
+		.github\workflows\publish-nuget-packages.yml = .github\workflows\publish-nuget-packages.yml
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3A727E60-D550-491C-B242-82EF728206E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3A727E60-D550-491C-B242-82EF728206E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3A727E60-D550-491C-B242-82EF728206E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3A727E60-D550-491C-B242-82EF728206E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0} = {AB1F18DA-27BB-4CA5-8EB9-DC1E5B3852D8}
+	EndGlobalSection
+EndGlobal
