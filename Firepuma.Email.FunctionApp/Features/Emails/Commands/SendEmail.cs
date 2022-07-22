@@ -14,7 +14,7 @@ using SendGrid.Helpers.Mail;
 // ReSharper disable UnusedType.Global
 // ReSharper disable ClassNeverInstantiated.Local
 
-namespace Firepuma.Email.FunctionApp.Commands;
+namespace Firepuma.Email.FunctionApp.Features.Emails.Commands;
 
 public static class SendEmail
 {

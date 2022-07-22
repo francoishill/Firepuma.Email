@@ -4,13 +4,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using Firepuma.Email.Abstractions.Infrastructure.Validation;
 using Firepuma.Email.Abstractions.Models.Dtos.ServiceBusMessages;
-using Firepuma.Email.FunctionApp.Commands;
+using Firepuma.Email.FunctionApp.Features.Emails.Commands;
 using MediatR;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
-namespace Firepuma.Email.FunctionApp.Input;
+namespace Firepuma.Email.FunctionApp.Api;
 
 public class SendEmailTrigger
 {
