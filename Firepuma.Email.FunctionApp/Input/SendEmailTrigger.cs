@@ -9,7 +9,6 @@ using MediatR;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SendGrid.Helpers.Mail;
 
 namespace Firepuma.Email.FunctionApp.Input;
 
@@ -27,7 +26,6 @@ public class SendEmailTrigger
         [ServiceBusTrigger("%QueueName%", Connection = "ServiceBus")] string emailMessageRequest,
         string messageId,
         ILogger log,
-        [SendGrid(ApiKey = "SendGridApiKey", From = "%FromEmailAddress%")] IAsyncCollector<SendGridMessage> emailMessageCollector,
         CancellationToken cancellationToken)
     {
         log.LogInformation("C# ServiceBus queue trigger function processing message ID {Id}", messageId);
@@ -45,8 +43,6 @@ public class SendEmailTrigger
 
         var command = new SendEmail.Command
         {
-            EmailMessageCollector = emailMessageCollector,
-
             TemplateId = requestDto.TemplateId,
             TemplateData = requestDto.TemplateData,
 

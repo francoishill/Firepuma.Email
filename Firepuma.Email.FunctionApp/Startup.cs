@@ -1,9 +1,15 @@
 ﻿using AutoMapper;
 using Firepuma.Email.FunctionApp;
+using Firepuma.Email.FunctionApp.Infrastructure.CommandHandling;
+using Firepuma.Email.FunctionApp.Infrastructure.Helpers;
 using Firepuma.Email.FunctionApp.Infrastructure.PipelineBehaviors;
+using Firepuma.Email.FunctionApp.Infrastructure.SendGridClient;
 using MediatR;
+using Microsoft.Azure.Cosmos.Table;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
+
+// ReSharper disable RedundantTypeArgumentsOfMethod
 
 [assembly: FunctionsStartup(typeof(Startup))]
 
@@ -17,6 +23,14 @@ public class Startup : FunctionsStartup
 
         AddAutoMapper(services);
         AddMediator(services);
+        AddCloudStorageAccount(services);
+
+        services.AddCommandHandling();
+
+        var apiKey = EnvironmentVariableHelpers.GetRequiredEnvironmentVariable("SendGridApiKey");
+        var fromEmail = EnvironmentVariableHelpers.GetRequiredEnvironmentVariable("FromEmailAddress");
+
+        services.AddSendGridClient(apiKey, fromEmail);
     }
 
     private static void AddMediator(IServiceCollection services)
@@ -30,5 +44,11 @@ public class Startup : FunctionsStartup
     {
         services.AddAutoMapper(typeof(Startup));
         services.BuildServiceProvider().GetRequiredService<IMapper>().ConfigurationProvider.AssertConfigurationIsValid();
+    }
+
+    private static void AddCloudStorageAccount(IServiceCollection services)
+    {
+        var storageConnectionString = EnvironmentVariableHelpers.GetRequiredEnvironmentVariable("AzureWebJobsStorage");
+        services.AddSingleton<CloudStorageAccount>(CloudStorageAccount.Parse(storageConnectionString));
     }
 }
