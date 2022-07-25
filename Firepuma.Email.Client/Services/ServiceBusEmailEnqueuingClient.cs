@@ -1,8 +1,7 @@
 using Azure.Messaging.ServiceBus;
 using Firepuma.Email.Abstractions.Infrastructure.Validation;
 using Firepuma.Email.Abstractions.Models.Dtos.ServiceBusMessages;
-using Firepuma.Email.Abstractions.Models.ValueObjects;
-using Firepuma.Email.Client.Models.ValueObjects;
+using Firepuma.Email.Client.Services.Results;
 using Newtonsoft.Json;
 
 namespace Firepuma.Email.Client.Services;
@@ -16,13 +15,13 @@ public class ServiceBusEmailEnqueuingClient : IEmailEnqueuingClient
         _serviceBusSender = serviceBusSender;
     }
 
-    public async Task<SuccessOrFailure<SuccessfulResult, FailedResult>> EnqueueEmail(
+    public async Task<EnqueueEmailResult> EnqueueEmail(
         SendEmailRequestDto requestDto,
         CancellationToken cancellationToken)
     {
         if (!ValidationHelpers.ValidateDataAnnotations(requestDto, out var validationResults))
         {
-            return new FailedResult(FailedResult.FailedReason.InputValidationFailed, validationResults.Select(r => r.ErrorMessage).ToArray());
+            return EnqueueEmailResult.Failed(EnqueueEmailResult.FailureReason.InputValidationFailed, validationResults.Select(r => r.ErrorMessage).ToArray());
         }
 
         var messageJson = JsonConvert.SerializeObject(requestDto);
@@ -36,6 +35,6 @@ public class ServiceBusEmailEnqueuingClient : IEmailEnqueuingClient
 
         await _serviceBusSender.SendMessageAsync(message, cancellationToken);
 
-        return new SuccessfulResult();
+        return EnqueueEmailResult.Success();
     }
 }
