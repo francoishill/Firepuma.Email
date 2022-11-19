@@ -1,4 +1,5 @@
 ﻿using Firepuma.CommandsAndQueries.Abstractions.Commands;
+using Firepuma.CommandsAndQueries.Abstractions.Entities.Attributes;
 using Firepuma.Email.Domain.Models;
 using Firepuma.Email.Domain.Services;
 using MediatR;
@@ -20,6 +21,8 @@ public static class SendEmailCommand
         public required string ApplicationId { get; init; }
 
         public required string? TemplateId { get; init; }
+
+        [IgnoreCommandExecution]
         public required object? TemplateData { get; init; }
 
         public required string Subject { get; init; }
@@ -27,7 +30,10 @@ public static class SendEmailCommand
         public required string ToEmail { get; init; }
         public required string? ToName { get; init; }
 
+        [IgnoreCommandExecution]
         public required string? HtmlBody { get; init; }
+
+        [IgnoreCommandExecution]
         public required string TextBody { get; init; }
     }
 
