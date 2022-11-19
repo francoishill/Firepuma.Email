@@ -15,7 +15,4 @@ public class MongoDbOptions
 
     [Required]
     public string CommandExecutionsCollectionName { get; set; } = null!;
-
-    [Required]
-    public string PetsCollectionName { get; set; } = null!;
 }
