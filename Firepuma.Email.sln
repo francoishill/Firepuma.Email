@@ -1,22 +1,26 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.FunctionApp", "Firepuma.Email.FunctionApp\Firepuma.Email.FunctionApp.csproj", "{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Domain", "Firepuma.Email.Domain\Firepuma.Email.Domain.csproj", "{5F8F7FE4-1A2C-452A-9744-5A2EA39FE756}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Abstractions", "Firepuma.Email.Abstractions\Firepuma.Email.Abstractions.csproj", "{3D48461C-555A-4ADD-AE40-6369E9BF34E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Infrastructure", "Firepuma.Email.Infrastructure\Firepuma.Email.Infrastructure.csproj", "{785575BE-D344-4659-A1FA-0149F276007F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Client", "Firepuma.Email.Client\Firepuma.Email.Client.csproj", "{3A727E60-D550-491C-B242-82EF728206E9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Tests", "Firepuma.Email.Tests\Firepuma.Email.Tests.csproj", "{8264E332-2B52-47D4-A5FA-A0AB0AA92EB7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{AB1F18DA-27BB-4CA5-8EB9-DC1E5B3852D8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.WebApi", "Firepuma.Email.WebApi\Firepuma.Email.WebApi.csproj", "{EC682CD5-BB0D-4CAD-A49D-31EF09C7FA9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExampleSendEmailApi", "Examples\ExampleSendEmailApi\ExampleSendEmailApi.csproj", "{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Firepuma.Email.Tests", "Firepuma.Email.Tests\Firepuma.Email.Tests.csproj", "{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "OtherFiles", "OtherFiles", "{B998865C-2A7F-42B0-B054-54C86FB32CDA}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFiles", "SolutionFiles", "{0EC384C4-88D3-4F4A-98A0-44D2C4A04B88}"
 	ProjectSection(SolutionItems) = preProject
+		.dockerignore = .dockerignore
+		.gitignore = .gitignore
 		README.md = README.md
-		.github\workflows\deploy-function-app.yml = .github\workflows\deploy-function-app.yml
-		.github\workflows\publish-nuget-packages.yml = .github\workflows\publish-nuget-packages.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{675C9268-9283-43D7-B440-0CEFAF1ACD30}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{F017EAE8-0A30-49CE-8CBD-DAFEE68CCA0D}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\deploy-gcloud-run-service.yml = .github\workflows\deploy-gcloud-run-service.yml
+		.github\workflows\unit-tests-only.yml = .github\workflows\unit-tests-only.yml
 	EndProjectSection
 EndProject
 Global
@@ -25,28 +29,25 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7ED67C45-D002-4E45-B5F5-ABF416B3A38E}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D48461C-555A-4ADD-AE40-6369E9BF34E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3A727E60-D550-491C-B242-82EF728206E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3A727E60-D550-491C-B242-82EF728206E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3A727E60-D550-491C-B242-82EF728206E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3A727E60-D550-491C-B242-82EF728206E9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ED739FF8-A6AB-4B9D-9739-6F3FEF2F6840}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F8F7FE4-1A2C-452A-9744-5A2EA39FE756}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F8F7FE4-1A2C-452A-9744-5A2EA39FE756}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F8F7FE4-1A2C-452A-9744-5A2EA39FE756}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F8F7FE4-1A2C-452A-9744-5A2EA39FE756}.Release|Any CPU.Build.0 = Release|Any CPU
+		{785575BE-D344-4659-A1FA-0149F276007F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{785575BE-D344-4659-A1FA-0149F276007F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{785575BE-D344-4659-A1FA-0149F276007F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{785575BE-D344-4659-A1FA-0149F276007F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8264E332-2B52-47D4-A5FA-A0AB0AA92EB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8264E332-2B52-47D4-A5FA-A0AB0AA92EB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8264E332-2B52-47D4-A5FA-A0AB0AA92EB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8264E332-2B52-47D4-A5FA-A0AB0AA92EB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EC682CD5-BB0D-4CAD-A49D-31EF09C7FA9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EC682CD5-BB0D-4CAD-A49D-31EF09C7FA9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EC682CD5-BB0D-4CAD-A49D-31EF09C7FA9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EC682CD5-BB0D-4CAD-A49D-31EF09C7FA9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{8355BEFA-CF0F-40F6-BED3-2860A8365BE0} = {AB1F18DA-27BB-4CA5-8EB9-DC1E5B3852D8}
+		{675C9268-9283-43D7-B440-0CEFAF1ACD30} = {0EC384C4-88D3-4F4A-98A0-44D2C4A04B88}
+		{F017EAE8-0A30-49CE-8CBD-DAFEE68CCA0D} = {675C9268-9283-43D7-B440-0CEFAF1ACD30}
 	EndGlobalSection
 EndGlobal
