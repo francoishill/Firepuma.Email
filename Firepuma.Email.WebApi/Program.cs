@@ -5,6 +5,7 @@ using Firepuma.Email.Infrastructure.Infrastructure.CommandHandling;
 using Firepuma.Email.Infrastructure.Infrastructure.MongoDb;
 using Firepuma.Email.WebApi.Controllers;
 using Firepuma.Email.WebApi.Exceptions;
+using Google.Cloud.Diagnostics.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,6 +30,20 @@ builder.Services.AddCommandsAndQueriesFunctionality(
 
 var sendGridConfigSection = builder.Configuration.GetSection("SendGrid");
 builder.Services.AddEmailing(sendGridConfigSection);
+
+if (!builder.Environment.IsDevelopment())
+{
+    builder.Logging.ClearProviders();
+    builder.Logging.AddGoogle(new LoggingServiceOptions
+    {
+        ProjectId = null, // leave null because it is running in Google Cloud when in non-Development mode
+        Options = LoggingOptions.Create(
+            LogLevel.Trace,
+            retryOptions: RetryOptions.Retry(ExceptionHandling.Propagate),
+            bufferOptions: BufferOptions.NoBuffer() //refer to https://github.com/googleapis/google-cloud-dotnet/pull/7025
+        ),
+    });
+}
 
 var app = builder.Build();
 
