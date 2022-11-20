@@ -1,8 +1,6 @@
 ﻿using Firepuma.Email.Domain.Models;
 using Firepuma.Email.Domain.Services;
-using Firepuma.Email.Infrastructure.Config;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using SendGrid;
 using SendGrid.Helpers.Mail;
 
@@ -10,16 +8,13 @@ namespace Firepuma.Email.Infrastructure.Emailing.Services;
 
 public class SendGridEmailService : IEmailService
 {
-    private readonly IOptions<SendGridOptions> _sendGridOptions;
     private readonly ILogger<SendGridEmailService> _logger;
     private readonly ISendGridClient _sendGridClient;
 
     public SendGridEmailService(
-        IOptions<SendGridOptions> sendGridOptions,
         ILogger<SendGridEmailService> logger,
         ISendGridClient sendGridClient)
     {
-        _sendGridOptions = sendGridOptions;
         _logger = logger;
         _sendGridClient = sendGridClient;
     }
