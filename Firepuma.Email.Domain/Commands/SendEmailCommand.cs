@@ -27,6 +27,8 @@ public static class SendEmailCommand
 
         public required string Subject { get; init; }
 
+        public required string FromEmail { get; init; }
+
         public required string ToEmail { get; init; }
         public required string? ToName { get; init; }
 
@@ -60,6 +62,7 @@ public static class SendEmailCommand
                 TemplateId = payload.TemplateId,
                 TemplateData = payload.TemplateData,
                 Subject = payload.Subject,
+                FromEmail = payload.FromEmail,
                 ToEmail = payload.ToEmail,
                 ToName = payload.ToName,
                 HtmlBody = payload.HtmlBody,

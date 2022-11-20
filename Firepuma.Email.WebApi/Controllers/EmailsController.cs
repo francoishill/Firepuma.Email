@@ -31,6 +31,7 @@ public class EmailsController : ControllerBase
             TemplateId = sendEmailRequest.TemplateId,
             TemplateData = sendEmailRequest.TemplateData,
             Subject = sendEmailRequest.Subject,
+            FromEmail = sendEmailRequest.FromEmail,
             ToEmail = sendEmailRequest.ToEmail,
             ToName = sendEmailRequest.ToName,
             HtmlBody = sendEmailRequest.HtmlBody,

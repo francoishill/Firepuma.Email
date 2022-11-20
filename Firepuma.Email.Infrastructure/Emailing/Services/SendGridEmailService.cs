@@ -28,7 +28,7 @@ public class SendGridEmailService : IEmailService
     {
         var sendGridMessage = new SendGridMessage();
 
-        sendGridMessage.SetFrom(_sendGridOptions.Value.FromEmailAddress);
+        sendGridMessage.SetFrom(message.FromEmail);
 
         sendGridMessage.AddTo(message.ToEmail, message.ToName);
         sendGridMessage.SetSubject(message.Subject);
