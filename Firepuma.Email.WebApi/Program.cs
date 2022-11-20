@@ -5,11 +5,14 @@ using Firepuma.Email.Infrastructure.Infrastructure.CommandHandling;
 using Firepuma.Email.Infrastructure.Infrastructure.MongoDb;
 using Firepuma.Email.WebApi.Controllers;
 using Firepuma.Email.WebApi.Exceptions;
+using Firepuma.Email.WebApi.Middleware;
 using Google.Cloud.Diagnostics.Common;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services
+    .AddControllers()
+    .AddInvalidModelStateLogging();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
