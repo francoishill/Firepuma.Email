@@ -24,6 +24,11 @@ public static class FriendlyExceptionsExtensions
                         context.Response.StatusCode = (int)commandException.StatusCode;
                         context.Response.ContentType = "application/json";
 
+                        logger.LogError(
+                            exceptionHandlerPathFeature.Error,
+                            "CommandException at path {Path}, status {Status}, error: {Error}, stack trace: {Stack}",
+                            exceptionHandlerPathFeature.Path, commandException.StatusCode.ToString(), exceptionHandlerPathFeature.Error.Message, exceptionHandlerPathFeature.Error.StackTrace);
+
                         await context.Response.WriteAsJsonAsync(UserFacingErrorResponse.CreateFromCommandException(commandException));
                     }
                     else
