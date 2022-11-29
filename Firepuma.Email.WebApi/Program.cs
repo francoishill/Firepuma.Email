@@ -1,4 +1,5 @@
 using AutoMapper;
+using Firepuma.BusMessaging.GooglePubSub;
 using Firepuma.Email.Domain.Commands;
 using Firepuma.Email.Infrastructure.Emailing;
 using Firepuma.Email.Infrastructure.Infrastructure.CommandHandling;
@@ -30,6 +31,8 @@ builder.Services.AddCommandsAndQueriesFunctionality(
     mongoDbOptions.AuthorizationFailuresCollectionName,
     mongoDbOptions.CommandExecutionsCollectionName,
     assembliesWithCommandHandlers);
+
+builder.Services.AddGooglePubSubMessageDeserializer();
 
 var sendGridConfigSection = builder.Configuration.GetSection("SendGrid");
 builder.Services.AddEmailing(sendGridConfigSection);
