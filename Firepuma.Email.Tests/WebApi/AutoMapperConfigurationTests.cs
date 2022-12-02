@@ -15,7 +15,7 @@ public class AutoMapperConfigurationTests
             //Uncomment this if we ever add mapping of Enums
             // configuration.EnableEnumMappingValidation();
 
-            configuration.AddMaps(typeof(EmailsController).GetTypeInfo().Assembly);
+            configuration.AddMaps(typeof(PubSubListenerController).GetTypeInfo().Assembly);
         });
 
         // Assert

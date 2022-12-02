@@ -17,7 +17,7 @@ builder.Services
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddAutoMapper(typeof(EmailsController));
+builder.Services.AddAutoMapper(typeof(PubSubListenerController));
 
 var mongoDbConfigSection = builder.Configuration.GetSection("MongoDb");
 builder.Services.AddMongoDbRepositories(mongoDbConfigSection, out var mongoDbOptions);

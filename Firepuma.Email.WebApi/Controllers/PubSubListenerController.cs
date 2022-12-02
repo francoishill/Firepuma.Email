@@ -9,12 +9,12 @@ namespace Firepuma.Email.WebApi.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class EmailsController : ControllerBase
+public class PubSubListenerController : ControllerBase
 {
     private readonly IMessageBusDeserializer _messageBusDeserializer;
     private readonly IMediator _mediator;
 
-    public EmailsController(
+    public PubSubListenerController(
         IMessageBusDeserializer messageBusDeserializer,
         IMediator mediator)
     {
@@ -23,7 +23,7 @@ public class EmailsController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> SendEmailAsync(
+    public async Task<IActionResult> HandleBusMessageAsync(
         PubSubMessageEnvelope envelope,
         CancellationToken cancellationToken)
     {
