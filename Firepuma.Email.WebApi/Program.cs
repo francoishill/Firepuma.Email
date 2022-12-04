@@ -1,9 +1,11 @@
 using AutoMapper;
 using Firepuma.BusMessaging.GooglePubSub;
+using Firepuma.BusMessaging.GooglePubSub.Config;
 using Firepuma.Email.Domain.Commands;
 using Firepuma.Email.Infrastructure.Emailing;
 using Firepuma.Email.Infrastructure.Infrastructure.CommandHandling;
 using Firepuma.Email.Infrastructure.Infrastructure.MongoDb;
+using Firepuma.Email.WebApi.BusMessaging;
 using Firepuma.Email.WebApi.Controllers;
 using Firepuma.Email.WebApi.Exceptions;
 using Firepuma.Email.WebApi.Middleware;
@@ -32,7 +34,10 @@ builder.Services.AddCommandsAndQueriesFunctionality(
     mongoDbOptions.CommandExecutionsCollectionName,
     assembliesWithCommandHandlers);
 
-builder.Services.AddGooglePubSubMessageDeserializer();
+builder.Services.AddGooglePubSubMessageDeserializer(new GooglePubSubBusMessagingDeserializeOptions
+{
+    DeserializedMessageTypeConverterImplementationType = typeof(DeserializedBusMessageTypeConverter),
+});
 
 var sendGridConfigSection = builder.Configuration.GetSection("SendGrid");
 builder.Services.AddEmailing(sendGridConfigSection);

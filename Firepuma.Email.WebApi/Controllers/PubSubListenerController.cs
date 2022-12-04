@@ -1,5 +1,5 @@
+using System.Text.Json;
 using Firepuma.BusMessaging.Abstractions.Services;
-using Firepuma.BusMessaging.GooglePubSub.Models;
 using Firepuma.Dtos.Email.BusMessages;
 using Firepuma.Email.Domain.Commands;
 using MediatR;
@@ -24,7 +24,7 @@ public class PubSubListenerController : ControllerBase
 
     [HttpPost]
     public async Task<IActionResult> HandleBusMessageAsync(
-        PubSubMessageEnvelope envelope,
+        JsonElement envelope,
         CancellationToken cancellationToken)
     {
         if (!_messageBusDeserializer.TryDeserializeMessage(envelope, out var deserializedMessage, out var messageExtraDetails, out var validationError))
@@ -34,7 +34,7 @@ public class PubSubListenerController : ControllerBase
 
         if (deserializedMessage is SendEmailRequest sendEmailRequest)
         {
-            await SendEmail(sendEmailRequest, messageExtraDetails.SenderApplicationId, cancellationToken);
+            await SendEmail(sendEmailRequest, messageExtraDetails.SourceId, cancellationToken);
         }
         else
         {
@@ -44,11 +44,11 @@ public class PubSubListenerController : ControllerBase
         return NoContent();
     }
 
-    private async Task SendEmail(SendEmailRequest sendEmailRequest, string senderApplicationId, CancellationToken cancellationToken)
+    private async Task SendEmail(SendEmailRequest sendEmailRequest, string sourceId, CancellationToken cancellationToken)
     {
         var command = new SendEmailCommand.Payload
         {
-            ApplicationId = senderApplicationId,
+            ApplicationId = sourceId,
             TemplateId = sendEmailRequest.TemplateId,
             TemplateData = sendEmailRequest.TemplateData,
             Subject = sendEmailRequest.Subject,

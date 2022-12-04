@@ -6,6 +6,7 @@ using MediatR;
 
 #pragma warning disable CS8618
 
+// ReSharper disable UnusedAutoPropertyAccessor.Global
 // ReSharper disable MemberCanBePrivate.Global
 // ReSharper disable UnusedMember.Local
 // ReSharper disable RedundantAssignment
