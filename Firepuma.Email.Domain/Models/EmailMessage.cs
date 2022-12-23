@@ -10,4 +10,6 @@ public class EmailMessage
     public required string? ToName { get; init; }
     public required string? HtmlBody { get; init; }
     public required string TextBody { get; init; }
+    public required int? GroupId { get; init; }
+    public required List<int>? GroupsToDisplay { get; init; }
 }

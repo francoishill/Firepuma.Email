@@ -57,6 +57,8 @@ public class PubSubListenerController : ControllerBase
             ToName = sendEmailRequest.ToName,
             HtmlBody = sendEmailRequest.HtmlBody,
             TextBody = sendEmailRequest.TextBody,
+            GroupId = sendEmailRequest.GroupId,
+            GroupsToDisplay = sendEmailRequest.GroupsToDisplay,
         };
 
         await _mediator.Send(command, cancellationToken);

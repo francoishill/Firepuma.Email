@@ -48,6 +48,11 @@ public class SendGridEmailService : IEmailService
             sendGridMessage.AddContent("text/plain", message.TextBody);
         }
 
+        if (message.GroupId != null)
+        {
+            sendGridMessage.SetAsm(message.GroupId.Value, message.GroupsToDisplay);
+        }
+
         var response = await _sendGridClient.SendEmailAsync(sendGridMessage, cancellationToken);
 
         if (!response.IsSuccessStatusCode)

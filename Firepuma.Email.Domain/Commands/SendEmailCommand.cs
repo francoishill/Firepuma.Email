@@ -38,6 +38,9 @@ public static class SendEmailCommand
 
         [IgnoreCommandExecution]
         public required string TextBody { get; init; }
+
+        public required int? GroupId { get; init; }
+        public required List<int>? GroupsToDisplay { get; init; }
     }
 
     public class Result
@@ -68,6 +71,8 @@ public static class SendEmailCommand
                 ToName = payload.ToName,
                 HtmlBody = payload.HtmlBody,
                 TextBody = payload.TextBody,
+                GroupId = payload.GroupId,
+                GroupsToDisplay = payload.GroupsToDisplay,
             };
 
             await _emailService.SendEmailAsync(message, cancellationToken);
