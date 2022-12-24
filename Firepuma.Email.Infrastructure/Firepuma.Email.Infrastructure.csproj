@@ -7,6 +7,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <PackageReference Include="Firepuma.BusMessaging.GooglePubSub" Version="0.8.1" />
       <PackageReference Include="Firepuma.CommandsAndQueries.MongoDb" Version="0.8.3" />
       <PackageReference Include="Firepuma.DatabaseRepositories.MongoDb" Version="0.11.3" />
       <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="7.0.0" />

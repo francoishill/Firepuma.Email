@@ -1,8 +1,7 @@
 using System.Text.Json;
 using Firepuma.BusMessaging.Abstractions.Services;
-using Firepuma.Dtos.Email.BusMessages;
-using Firepuma.Email.Domain.Commands;
-using MediatR;
+using Firepuma.Email.Domain.Plumbing.IntegrationEvents.Abstractions;
+using Firepuma.Email.Domain.Plumbing.IntegrationEvents.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Firepuma.Email.WebApi.Controllers;
@@ -11,56 +10,59 @@ namespace Firepuma.Email.WebApi.Controllers;
 [Route("api/[controller]")]
 public class PubSubListenerController : ControllerBase
 {
-    private readonly IMessageBusDeserializer _messageBusDeserializer;
-    private readonly IMediator _mediator;
+    private readonly ILogger<PubSubListenerController> _logger;
+    private readonly IBusMessageParser _busMessageParser;
+    private readonly IIntegrationEventsMappingCache _mappingCache;
+    private readonly IIntegrationEventHandler _integrationEventHandler;
 
     public PubSubListenerController(
-        IMessageBusDeserializer messageBusDeserializer,
-        IMediator mediator)
+        ILogger<PubSubListenerController> logger,
+        IBusMessageParser busMessageParser,
+        IIntegrationEventsMappingCache mappingCache,
+        IIntegrationEventHandler integrationEventHandler)
     {
-        _messageBusDeserializer = messageBusDeserializer;
-        _mediator = mediator;
+        _logger = logger;
+        _busMessageParser = busMessageParser;
+        _mappingCache = mappingCache;
+        _integrationEventHandler = integrationEventHandler;
     }
 
     [HttpPost]
     public async Task<IActionResult> HandleBusMessageAsync(
-        JsonElement envelope,
+        JsonDocument requestBody,
         CancellationToken cancellationToken)
     {
-        if (!_messageBusDeserializer.TryDeserializeMessage(envelope, out var deserializedMessage, out var messageExtraDetails, out var validationError))
+        if (!_busMessageParser.TryParseMessage(requestBody, out var parsedMessageEnvelope, out var parseFailureReason))
         {
-            return BadRequest(validationError);
+            _logger.LogError("Failed to parse message, parseFailureReason: {ParseFailureReason}", parseFailureReason);
+            return BadRequest(parseFailureReason);
         }
 
-        if (deserializedMessage is SendEmailRequest sendEmailRequest)
+        if (!_mappingCache.IsIntegrationEventForEmailService(parsedMessageEnvelope))
         {
-            await SendEmail(sendEmailRequest, messageExtraDetails.SourceId, cancellationToken);
-        }
-        else
-        {
-            return BadRequest($"Unsupported message type '{deserializedMessage.GetType().FullName}'");
+            _logger.LogError(
+                "Unknown message type (not an integration event), message id {MessageId}, message type {MessageType}",
+                parsedMessageEnvelope.MessageId, parsedMessageEnvelope.MessageType);
+
+            return BadRequest("Unknown message type (not an integration event)");
         }
 
-        return NoContent();
-    }
-
-    private async Task SendEmail(SendEmailRequest sendEmailRequest, string sourceId, CancellationToken cancellationToken)
-    {
-        var command = new SendEmailCommand.Payload
+        var integrationEventEnvelope = new IntegrationEventEnvelope
         {
-            ApplicationId = sourceId,
-            TemplateId = sendEmailRequest.TemplateId,
-            TemplateData = sendEmailRequest.TemplateData,
-            Subject = sendEmailRequest.Subject,
-            FromEmail = sendEmailRequest.FromEmail,
-            ToEmail = sendEmailRequest.ToEmail,
-            ToName = sendEmailRequest.ToName,
-            HtmlBody = sendEmailRequest.HtmlBody,
-            TextBody = sendEmailRequest.TextBody,
-            GroupId = sendEmailRequest.GroupId,
-            GroupsToDisplay = sendEmailRequest.GroupsToDisplay,
+            EventId = parsedMessageEnvelope.MessageId,
+            EventType = parsedMessageEnvelope.MessageType,
+            EventPayload = parsedMessageEnvelope.MessagePayload!,
         };
 
-        await _mediator.Send(command, cancellationToken);
+        var handled = await _integrationEventHandler.TryHandleEvent(parsedMessageEnvelope.Source, integrationEventEnvelope, cancellationToken);
+        if (!handled)
+        {
+            _logger.LogError(
+                "Integration event was not handled for message id {MessageId}, event type {EventType}",
+                parsedMessageEnvelope.MessageId, integrationEventEnvelope.EventType);
+            return BadRequest("Integration event was not handled");
+        }
+
+        return Accepted(integrationEventEnvelope);
     }
 }

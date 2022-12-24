@@ -2,6 +2,7 @@
 using Firepuma.CommandsAndQueries.Abstractions.Entities.Attributes;
 using Firepuma.Email.Domain.Models;
 using Firepuma.Email.Domain.Services;
+using FluentValidation;
 using MediatR;
 
 #pragma warning disable CS8618
@@ -45,6 +46,24 @@ public static class SendEmailCommand
 
     public class Result
     {
+    }
+
+    public sealed class Validator : AbstractValidator<Payload>
+    {
+        public Validator()
+        {
+            RuleFor(x => x.Subject)
+                .NotEmpty();
+
+            RuleFor(x => x.FromEmail)
+                .NotEmpty();
+
+            RuleFor(x => x.ToEmail)
+                .NotEmpty();
+
+            RuleFor(x => x.TextBody)
+                .NotEmpty();
+        }
     }
 
     public class Handler : IRequestHandler<Payload, Result>

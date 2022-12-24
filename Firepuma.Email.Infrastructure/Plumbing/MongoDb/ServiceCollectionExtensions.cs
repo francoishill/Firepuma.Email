@@ -3,7 +3,7 @@ using Firepuma.Email.Infrastructure.Config;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Firepuma.Email.Infrastructure.Infrastructure.MongoDb;
+namespace Firepuma.Email.Infrastructure.Plumbing.MongoDb;
 
 public static class ServiceCollectionExtensions
 {

@@ -4,7 +4,7 @@ using Firepuma.CommandsAndQueries.MongoDb.Config;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Firepuma.Email.Infrastructure.Infrastructure.CommandHandling;
+namespace Firepuma.Email.Infrastructure.Plumbing.CommandHandling;
 
 public static class ServiceCollectionExtensions
 {
