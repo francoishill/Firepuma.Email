@@ -1,4 +1,5 @@
-﻿using Firepuma.Email.Domain.Models;
+﻿using System.Text.Json;
+using Firepuma.Email.Domain.Models;
 using Firepuma.Email.Domain.Services;
 using Microsoft.Extensions.Logging;
 using SendGrid;
@@ -21,6 +22,10 @@ public class SendGridEmailService : IEmailService
 
     public async Task SendEmailAsync(EmailMessage message, CancellationToken cancellationToken)
     {
+        _logger.LogDebug(
+            "Sending SendGrid email from email message payload: {Payload}",
+            JsonSerializer.Serialize(message));
+
         var sendGridMessage = new SendGridMessage();
 
         sendGridMessage.SetFrom(message.FromEmail);
