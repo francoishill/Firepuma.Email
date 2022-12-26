@@ -39,6 +39,10 @@ public class PubSubListenerController : ControllerBase
             return BadRequest(parseFailureReason);
         }
 
+        _logger.LogDebug(
+            "Parsed message: id {Id}, type: {Type}, payload: {Payload}",
+            parsedMessageEnvelope.MessageId, parsedMessageEnvelope.MessageType, parsedMessageEnvelope.MessagePayload);
+
         if (!_mappingCache.IsIntegrationEventForEmailService(parsedMessageEnvelope))
         {
             _logger.LogError(
