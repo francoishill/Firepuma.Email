@@ -22,5 +22,5 @@ When using github, the deployment will happen automatically due to the folder co
 To test locally whether the Dockerfile can build, run the following command:
 
 ```shell
-docker build --tag tmp-test-firepuma-email --file Firepuma.Email.WebApi/Dockerfile .
+docker build --tag tmp-test-email-service --file Firepuma.Email.WebApi/Dockerfile .
 ```
