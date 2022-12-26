@@ -25,7 +25,7 @@ public static class SendEmailCommand
         public required string? TemplateId { get; init; }
 
         [IgnoreCommandExecution]
-        public required object? TemplateData { get; init; }
+        public required Dictionary<string, string>? TemplateData { get; init; }
 
         public required string Subject { get; init; }
 

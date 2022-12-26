@@ -3,7 +3,7 @@
 public class EmailMessage
 {
     public required string? TemplateId { get; init; }
-    public required object? TemplateData { get; init; }
+    public required Dictionary<string, string>? TemplateData { get; init; }
     public required string Subject { get; init; }
     public required string FromEmail { get; init; }
     public required string ToEmail { get; init; }
