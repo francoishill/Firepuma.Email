@@ -52,12 +52,16 @@ public class PubSubListenerController : ControllerBase
             return BadRequest("Unknown message type (not an integration event)");
         }
 
-        var integrationEventEnvelope = new IntegrationEventEnvelope
+        var deserializeOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var integrationEventEnvelope = JsonSerializer.Deserialize<IntegrationEventEnvelope>(parsedMessageEnvelope.MessagePayload ?? "{}", deserializeOptions);
+        if (integrationEventEnvelope == null)
         {
-            EventId = parsedMessageEnvelope.MessageId,
-            EventType = parsedMessageEnvelope.MessageType,
-            EventPayload = parsedMessageEnvelope.MessagePayload!,
-        };
+            _logger.LogError(
+                "Unable to deserialize integration event envelope, message id {MessageId}, type {MessageType}, source: {Source}",
+                parsedMessageEnvelope.MessageId, parsedMessageEnvelope.MessageType, parsedMessageEnvelope.Source);
+
+            return BadRequest("Unable to deserialize integration event envelope");
+        }
 
         var handled = await _integrationEventHandler.TryHandleEvent(parsedMessageEnvelope.Source, integrationEventEnvelope, cancellationToken);
         if (!handled)
