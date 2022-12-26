@@ -4,13 +4,16 @@ using System.Text.Json;
 using Firepuma.BusMessaging.Abstractions.Services.Results;
 using Firepuma.Dtos.Email.BusMessages;
 using Firepuma.Email.Domain.Plumbing.IntegrationEvents.Abstractions;
-using Firepuma.Email.Domain.Plumbing.IntegrationEvents.ValueObjects;
+using Firepuma.EventMediation.IntegrationEvents.Abstractions;
+using Firepuma.EventMediation.IntegrationEvents.ValueObjects;
 
 [assembly: InternalsVisibleTo("Firepuma.Email.Tests")]
 
 namespace Firepuma.Email.Domain.Plumbing.IntegrationEvents.Services;
 
-internal class IntegrationEventsMappingCache : IIntegrationEventsMappingCache
+public class IntegrationEventsMappingCache :
+    IIntegrationEventsMappingCache,
+    IIntegrationEventDeserializer
 {
     private static bool IsIntegrationEventForEmailService(string messageType)
     {

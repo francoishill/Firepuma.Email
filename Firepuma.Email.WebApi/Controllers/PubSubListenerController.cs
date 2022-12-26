@@ -1,7 +1,8 @@
 using System.Text.Json;
 using Firepuma.BusMessaging.Abstractions.Services;
 using Firepuma.Email.Domain.Plumbing.IntegrationEvents.Abstractions;
-using Firepuma.Email.Domain.Plumbing.IntegrationEvents.ValueObjects;
+using Firepuma.EventMediation.IntegrationEvents.Abstractions;
+using Firepuma.EventMediation.IntegrationEvents.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Firepuma.Email.WebApi.Controllers;
