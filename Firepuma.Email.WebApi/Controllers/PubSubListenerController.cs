@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Firepuma.BusMessaging.Abstractions.Services;
+using Firepuma.BusMessaging.GooglePubSub.Config;
 using Firepuma.Email.Domain.Plumbing.IntegrationEvents.Abstractions;
 using Firepuma.EventMediation.IntegrationEvents.Abstractions;
 using Firepuma.EventMediation.IntegrationEvents.ValueObjects;
@@ -53,14 +54,34 @@ public class PubSubListenerController : ControllerBase
         }
 
         var deserializeOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var integrationEventEnvelope = JsonSerializer.Deserialize<IntegrationEventEnvelope>(parsedMessageEnvelope.MessagePayload ?? "{}", deserializeOptions);
+        var messagePayload = JsonSerializer.Deserialize<JsonDocument>(parsedMessageEnvelope.MessagePayload ?? "{}", deserializeOptions);
+
+        if (messagePayload == null)
+        {
+            _logger.LogError(
+                "Parsed message deserialization resulted in NULL, message id {MessageId}, type {MessageType}, source: {Source}",
+                parsedMessageEnvelope.MessageId, parsedMessageEnvelope.MessageType, parsedMessageEnvelope.Source);
+
+            return BadRequest("Parsed message deserialization resulted in NULL");
+        }
+
+        var integrationEventEnvelope =
+            parsedMessageEnvelope.MessageId != BusMessagingPubSubConstants.LOCAL_DEVELOPMENT_PARSED_MESSAGE_ID
+                ? messagePayload.Deserialize<IntegrationEventEnvelope>()
+                : new IntegrationEventEnvelope // this version is typically used for local development
+                {
+                    EventId = parsedMessageEnvelope.MessageId,
+                    EventType = parsedMessageEnvelope.MessageType,
+                    EventPayload = parsedMessageEnvelope.MessagePayload!,
+                };
+
         if (integrationEventEnvelope == null)
         {
             _logger.LogError(
-                "Unable to deserialize integration event envelope, message id {MessageId}, type {MessageType}, source: {Source}",
+                "IntegrationEventEnvelope deserialization resulted in a NULL, message id {MessageId}, type {MessageType}, source: {Source}",
                 parsedMessageEnvelope.MessageId, parsedMessageEnvelope.MessageType, parsedMessageEnvelope.Source);
 
-            return BadRequest("Unable to deserialize integration event envelope");
+            return BadRequest("IntegrationEventEnvelope deserialization resulted in a NULL");
         }
 
         var handled = await _integrationEventHandler.TryHandleEvent(parsedMessageEnvelope.Source, integrationEventEnvelope, cancellationToken);
