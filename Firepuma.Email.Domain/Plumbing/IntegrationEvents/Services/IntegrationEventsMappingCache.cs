@@ -1,6 +1,7 @@
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 using Firepuma.BusMessaging.Abstractions.Services.Results;
 using Firepuma.Dtos.Email.BusMessages;
 using Firepuma.Email.Domain.Plumbing.IntegrationEvents.Abstractions;
@@ -41,10 +42,11 @@ public class IntegrationEventsMappingCache :
 
     private static TIntegrationEvent? DeserializePayload<TIntegrationEvent>(string eventPayload)
     {
-        var options = new JsonSerializerOptions
+        var deserializeOptions = new JsonSerializerOptions
         {
             PropertyNameCaseInsensitive = true,
+            Converters = { new JsonStringEnumConverter() },
         };
-        return JsonSerializer.Deserialize<TIntegrationEvent?>(eventPayload, options);
+        return JsonSerializer.Deserialize<TIntegrationEvent?>(eventPayload, deserializeOptions);
     }
 }
