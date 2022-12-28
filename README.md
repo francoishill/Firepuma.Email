@@ -4,7 +4,7 @@ A repository containing code for a microservice to send emails.
 
 ## Introduction
 
-This solution was generated with [francoishill/Firepuma.Email](https://github.com/francoishill/Firepuma.Email).
+This solution was generated with [francoishill/Firepuma.Template.GoogleCloudRunService](https://github.com/francoishill/Firepuma.Template.GoogleCloudRunService).
 
 The following projects were generated as part of the solution:
 
