@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Firepuma.Email.WebApi\Firepuma.Email.WebApi.csproj" />
+      <ProjectReference Include="..\Firepuma.Email.Worker\Firepuma.Email.Worker.csproj" />
     </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Firepuma.Email.WebApi.Middleware;
+﻿namespace Firepuma.Email.Worker.Middleware;
 
 public static class InvalidModelStateLoggingExtensions
 {

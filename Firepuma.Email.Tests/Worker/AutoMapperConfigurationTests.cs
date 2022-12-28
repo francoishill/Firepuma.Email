@@ -1,8 +1,8 @@
 ﻿using System.Reflection;
 using AutoMapper;
-using Firepuma.Email.WebApi.Controllers;
+using Firepuma.Email.Worker.Controllers;
 
-namespace Firepuma.Email.Tests.WebApi;
+namespace Firepuma.Email.Tests.Worker;
 
 public class AutoMapperConfigurationTests
 {

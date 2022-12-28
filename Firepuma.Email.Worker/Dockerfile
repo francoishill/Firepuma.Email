@@ -5,8 +5,8 @@ COPY ["Firepuma.Email.Domain/Firepuma.Email.Domain.csproj", "Firepuma.Email.Doma
 COPY ["Firepuma.Email.Infrastructure/Firepuma.Email.Infrastructure.csproj", "Firepuma.Email.Infrastructure/"]
 COPY ["Firepuma.Email.Tests/Firepuma.Email.Tests.csproj", "Firepuma.Email.Tests/"]
 
-COPY ["Firepuma.Email.WebApi/Firepuma.Email.WebApi.csproj", "Firepuma.Email.WebApi/"]
-RUN dotnet restore "Firepuma.Email.WebApi/Firepuma.Email.WebApi.csproj"
+COPY ["Firepuma.Email.Worker/Firepuma.Email.Worker.csproj", "Firepuma.Email.Worker/"]
+RUN dotnet restore "Firepuma.Email.Worker/Firepuma.Email.Worker.csproj"
 COPY . .
 
 
@@ -17,8 +17,8 @@ RUN dotnet test --no-restore --logger:trx --results-directory /testsresults
 
 FROM test AS publish
 ARG target_configuration=Release
-WORKDIR /src/Firepuma.Email.WebApi
-RUN dotnet publish  "Firepuma.Email.WebApi.csproj" -c ${target_configuration} --no-restore -o /app
+WORKDIR /src/Firepuma.Email.Worker
+RUN dotnet publish  "Firepuma.Email.Worker.csproj" -c ${target_configuration} --no-restore -o /app
 
 
 FROM mcr.microsoft.com/dotnet/aspnet:7.0-alpine AS final
@@ -29,4 +29,4 @@ COPY --from=publish /app .
 ARG BUILD_ID
 ENV BUILD_ID="${BUILD_ID}"
 
-ENTRYPOINT ["dotnet", "Firepuma.Email.WebApi.dll"]
+ENTRYPOINT ["dotnet", "Firepuma.Email.Worker.dll"]

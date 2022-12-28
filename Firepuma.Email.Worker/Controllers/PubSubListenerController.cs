@@ -9,7 +9,7 @@ using Firepuma.EventMediation.IntegrationEvents.Abstractions;
 using Firepuma.EventMediation.IntegrationEvents.ValueObjects;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Firepuma.Email.WebApi.Controllers;
+namespace Firepuma.Email.Worker.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]

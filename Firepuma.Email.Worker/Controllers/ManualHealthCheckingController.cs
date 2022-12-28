@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace Firepuma.Email.WebApi.Controllers;
+namespace Firepuma.Email.Worker.Controllers;
 
 [ApiController]
 [Route("[controller]")]

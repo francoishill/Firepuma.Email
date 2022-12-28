@@ -4,9 +4,9 @@ using Firepuma.Email.Infrastructure.Emailing;
 using Firepuma.Email.Infrastructure.Plumbing.CommandHandling;
 using Firepuma.Email.Infrastructure.Plumbing.IntegrationEvents;
 using Firepuma.Email.Infrastructure.Plumbing.MongoDb;
-using Firepuma.Email.WebApi.Controllers;
-using Firepuma.Email.WebApi.Exceptions;
-using Firepuma.Email.WebApi.Middleware;
+using Firepuma.Email.Worker.Controllers;
+using Firepuma.Email.Worker.Exceptions;
+using Firepuma.Email.Worker.Middleware;
 using Google.Cloud.Diagnostics.Common;
 
 var builder = WebApplication.CreateBuilder(args);
