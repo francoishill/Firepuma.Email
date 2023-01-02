@@ -79,5 +79,7 @@ public class SendGridEmailService : IEmailService
 
             throw new Exception($"Response was not successful for SendGrid SendEmailAsync call, response body: {responseBody}");
         }
+
+        _logger.LogInformation("Email successfully sent to {To} with Subject '{Subject}'", message.ToEmail, message.Subject);
     }
 }
